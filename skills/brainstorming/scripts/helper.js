@@ -51,12 +51,12 @@
       const container = target.closest('.options') || target.closest('.cards');
       const selected = container ? container.querySelectorAll('.selected') : [];
       if (selected.length === 0) {
-        indicator.textContent = 'Click an option above, then return to the terminal';
+        indicator.textContent = 'Interagissez ci-dessus, puis revenez au terminal';
       } else if (selected.length === 1) {
         const label = selected[0].querySelector('h3, .content h3, .card-body h3')?.textContent?.trim() || selected[0].dataset.choice;
-        indicator.innerHTML = '<span class="selected-text">' + label + ' selected</span> — return to terminal to continue';
+        indicator.innerHTML = '<span class="selected-text">' + label + ' sélectionné</span> — retournez au terminal pour continuer';
       } else {
-        indicator.innerHTML = '<span class="selected-text">' + selected.length + ' selected</span> — return to terminal to continue';
+        indicator.innerHTML = '<span class="selected-text">' + selected.length + ' sélectionnés</span> — retournez au terminal pour continuer';
       }
     }, 0);
   });
@@ -85,4 +85,40 @@
   };
 
   connect();
+
+  // Text input form submission
+  window.submitTextInput = function() {
+    const textarea = document.getElementById('user-input');
+    if (!textarea) return;
+    const value = textarea.value.trim();
+    if (!value) return;
+
+    sendEvent({
+      type: 'text-input',
+      value: value
+    });
+
+    // Disable form after submission to prevent double-send
+    textarea.disabled = true;
+    textarea.value = '';
+    const btn = textarea.closest('.text-input-form')?.querySelector('button');
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Envoyé';
+    }
+
+    // Update indicator
+    const indicator = document.getElementById('indicator-text');
+    if (indicator) {
+      indicator.innerHTML = '<span class="selected-text">Message envoyé</span> — retournez au terminal pour continuer';
+    }
+  };
+
+  // Handle Enter key in textarea (Shift+Enter for newline)
+  document.addEventListener('keydown', (e) => {
+    if (e.target.id === 'user-input' && e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      window.submitTextInput();
+    }
+  });
 })();
