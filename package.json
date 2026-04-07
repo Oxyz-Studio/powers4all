@@ -1,6 +1,5 @@
 {
   "name": "powers4all",
   "version": "0.1.0",
-  "type": "module",
-  "main": ".opencode/plugins/superpowers.js"
+  "type": "module"
 }

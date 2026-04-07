@@ -1,8 +1,8 @@
 # Powers4All Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use pa:subagent-driven-development (recommended) or pa:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Transform superpowers into Powers4All — a browser-first workflow for non-dev tech profiles (PMs, POs, managers) that communicates in business language and uses a localhost web interface as the primary interaction surface.
+**Goal:** Transform powers4all into Powers4All — a browser-first workflow for non-dev tech profiles (PMs, POs, managers) that communicates in business language and uses a localhost web interface as the primary interaction surface.
 
 **Architecture:** Extend the existing brainstorm visual companion server to serve as the primary UI for all skills. Create 4 new skills (pa-start, pa-investigate, pa-explain, pa-preview) that push HTML pages to the browser. Enrich the frame template with new CSS components (chat, diff viewer, text input form, progress tracker). Remove dev-only skills. Adapt CLAUDE.md.
 
@@ -18,7 +18,7 @@
 - `skills/pa-investigate/SKILL.md` — Bug investigation skill in business language
 - `skills/pa-explain/SKILL.md` — Functional question answering skill
 - `skills/pa-preview/SKILL.md` — Style change preview skill
-- `skills/using-powers4all/SKILL.md` — Replacement for using-superpowers, adapted for powers4all
+- `skills/using-powers4all/SKILL.md` — Replacement for the previous intro skill, adapted for powers4all
 - `commands/pa-start.md` — Slash command entry point
 
 ### Files to modify
@@ -35,7 +35,7 @@
 - `skills/finishing-a-development-branch/` — Too technical
 - `skills/receiving-code-review/` — Not relevant
 - `skills/writing-skills/` — Not relevant for end users
-- `skills/using-superpowers/` — Replaced by using-powers4all
+- `skills/using-powers4all/` — Replaces the previous intro skill
 - `skills/brainstorming/` — Replaced by pa-start (scripts/ kept in place)
 - `commands/brainstorm.md` — Replaced by pa-start.md
 - `commands/execute-plan.md` — Not needed as direct command
@@ -55,7 +55,7 @@
   "name": "powers4all",
   "version": "0.1.0",
   "type": "module",
-  "main": ".opencode/plugins/superpowers.js"
+  "type": "module"
 }
 ```
 
@@ -429,7 +429,7 @@ git commit -m "feat: handle text-input events in server and update to Powers4All
 - Delete: `skills/finishing-a-development-branch/`
 - Delete: `skills/receiving-code-review/`
 - Delete: `skills/writing-skills/`
-- Delete: `skills/using-superpowers/`
+- Delete: previous intro skill directory
 - Delete: `skills/brainstorming/` (only `SKILL.md`, `visual-companion.md`, `spec-document-reviewer-prompt.md` — keep the `scripts/` directory)
 - Delete: `commands/brainstorm.md`
 - Delete: `commands/execute-plan.md`
@@ -444,7 +444,7 @@ rm -rf skills/using-git-worktrees
 rm -rf skills/finishing-a-development-branch
 rm -rf skills/receiving-code-review
 rm -rf skills/writing-skills
-rm -rf skills/using-superpowers
+rm -rf skills/using-powers4all-old
 ```
 
 - [ ] **Step 2: Remove brainstorming skill files (keep scripts/)**
@@ -1358,7 +1358,7 @@ Powers4All is a browser-first workflow system for Claude Code, designed for non-
 | `pa-investigate` | Bug diagnosis in business language |
 | `pa-explain` | Answer functional questions with visual explanations |
 | `pa-preview` | Preview style/visual changes before/after |
-| `writing-plans` | Create implementation plans (inherited from superpowers) |
+| `writing-plans` | Create implementation plans (inherited) |
 | `executing-plans` | Execute plans in batches (inherited) |
 | `subagent-driven-development` | Dispatch subagents for implementation (inherited) |
 | `requesting-code-review` | Review completed work (inherited) |
@@ -1414,7 +1414,7 @@ Expected: JSON with `type: "server-started"`, a URL, screen_dir, state_dir
 Write a test HTML file to screen_dir and verify it loads:
 
 ```bash
-SCREEN_DIR=$(cat /tmp/pa-test/.superpowers/brainstorm/*/state/server-info | python3 -c "import sys,json; print(json.load(sys.stdin)['screen_dir'])")
+SCREEN_DIR=$(cat /tmp/pa-test/.powers4all/sessions/*/state/server-info | python3 -c "import sys,json; print(json.load(sys.stdin)['screen_dir'])")
 ```
 
 Write a test page to `$SCREEN_DIR/test-components.html` with all new components (chat, change-summary, text-input-form, progress-tracker) and verify it renders at the server URL.
@@ -1422,7 +1422,7 @@ Write a test page to `$SCREEN_DIR/test-components.html` with all new components 
 - [ ] **Step 4: Stop test server and clean up**
 
 ```bash
-SESSION_DIR=$(dirname $(dirname $(cat /tmp/pa-test/.superpowers/brainstorm/*/state/server-info | head -1 | python3 -c "import sys,json; print(json.load(sys.stdin)['state_dir'])")))
+SESSION_DIR=$(dirname $(dirname $(cat /tmp/pa-test/.powers4all/sessions/*/state/server-info | head -1 | python3 -c "import sys,json; print(json.load(sys.stdin)['state_dir'])")))
 skills/brainstorming/scripts/stop-server.sh "$SESSION_DIR"
 rm -rf /tmp/pa-test
 ```

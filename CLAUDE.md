@@ -31,7 +31,7 @@ Powers4All is a browser-first workflow system for Claude Code, designed for non-
 | `pa-investigate` | Bug diagnosis in business language |
 | `pa-explain` | Answer functional questions with visual explanations |
 | `pa-preview` | Preview style/visual changes before/after |
-| `writing-plans` | Create implementation plans (inherited from superpowers) |
+| `writing-plans` | Create implementation plans (inherited) |
 | `executing-plans` | Execute plans in batches (inherited) |
 | `subagent-driven-development` | Dispatch subagents for implementation (inherited) |
 | `requesting-code-review` | Review completed work (inherited) |

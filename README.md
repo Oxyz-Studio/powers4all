@@ -1,115 +1,115 @@
 # Powers4All
 
-Powers4All est un fork de [Superpowers](https://github.com/obra/superpowers) adapte pour les **profils tech non-developpeurs** : chefs de projet, product owners, managers, et toute personne qui a besoin d'interagir avec un codebase sans ecrire de code.
+Powers4All is a plugin for Claude Code adapted for **non-developer tech profiles**: project managers, product owners, managers, and anyone who needs to interact with a codebase without writing code.
 
-## Comment ca marche
+## How it works
 
-Au lieu du terminal, Powers4All utilise une **interface navigateur** (localhost) comme surface d'interaction principale. Vous lancez une commande, et tout se passe dans votre navigateur : questions, reponses, previews, suivi d'avancement.
+Instead of the terminal, Powers4All uses a **browser interface** (localhost) as the primary interaction surface. You run a command, and everything happens in your browser: questions, answers, previews, progress tracking.
 
-L'agent communique en **langage metier** — jamais de noms de fichiers, de code, ou de jargon technique. Il parle de modules, d'ecrans, de fonctionnalites et de comportements.
+The agent communicates in **business language** -- never file names, code, or technical jargon. It talks about modules, screens, features, and behaviors.
 
-### Le workflow
+### The workflow
 
-1. Vous tapez `/pa:start Le filtre par date ne marche pas` dans Claude Code
-2. Le navigateur s'ouvre avec une interface visuelle
-3. L'agent vous pose des questions de clarification (clics ou texte libre)
-4. Il investigue, diagnostique, et vous presente ses trouvailles en langage clair
-5. Apres votre validation, il implemente la correction
-6. Vous voyez l'avancement en temps reel dans le navigateur
+1. Type `/pa:start The date filter is not working` in Claude Code
+2. The browser opens with a visual interface
+3. The agent asks clarifying questions (clickable options or free text)
+4. It investigates, diagnoses, and presents findings in plain language
+5. After your approval, it implements the fix
+6. You see real-time progress in the browser
 
-## Cas d'usage
+## Use cases
 
-| Type | Exemple | Ce qui se passe |
+| Type | Example | What happens |
 |---|---|---|
-| **Bug** | "Le bouton de paiement ne marche plus" | Investigation, diagnostic metier, correction apres validation |
-| **Question** | "Comment marche le systeme de notifications ?" | Explication visuelle avec schemas et flux |
-| **Style** | "Rendre les boutons plus arrondis et bleus" | Preview avant/apres dans le navigateur |
-| **Evolution** | "Ajouter un export PDF sur les factures" | Brainstorming allege, specs, plan, implementation |
+| **Bug** | "The payment button is broken" | Investigation, business-language diagnosis, fix after approval |
+| **Question** | "How does the notification system work?" | Visual explanation with diagrams and flows |
+| **Style** | "Make the buttons more rounded and blue" | Before/after preview in the browser |
+| **Evolution** | "Add PDF export to invoices" | Lightweight brainstorming, specs, plan, implementation |
 
 ## Installation
 
 ### Claude Code (via Plugin Marketplace)
 
-Enregistrez le marketplace :
+Register the marketplace:
 
 ```bash
-/plugin marketplace add alex/powers4all
+/plugin marketplace add Oxyz-Studio/powers4all
 ```
 
-Puis installez le plugin :
+Then install the plugin:
 
 ```bash
-/plugin install powers4all@powers4all
+/plugin install powers4all@pa
 ```
 
-### Installation locale (developpement)
+### Local installation (development)
 
-Clonez le repo et enregistrez-le comme marketplace local :
+Clone the repo and register it as a local marketplace:
 
 ```bash
-git clone https://github.com/alex/powers4all.git
-/plugin marketplace add /chemin/vers/powers4all
-/plugin install powers4all@powers4all-dev
+git clone https://github.com/Oxyz-Studio/powers4all.git
+/plugin marketplace add /path/to/powers4all
+/plugin install powers4all@pa-dev
 ```
 
 ### Verification
 
-Lancez une nouvelle session Claude Code dans un projet et tapez :
+Start a new Claude Code session in a project and type:
 
 ```
-/pa:start Comment marche cette application ?
+/pa:start How does this application work?
 ```
 
-L'interface navigateur devrait se lancer automatiquement.
+The browser interface should launch automatically.
 
 ## Skills
 
-### Skills Powers4All
+### Powers4All Skills
 
-| Skill | Role |
+| Skill | Purpose |
 |---|---|
-| `pa-start` | Point d'entree — classifie la demande, lance le navigateur, orchestre le workflow |
-| `pa-investigate` | Diagnostic de bugs en langage metier |
-| `pa-explain` | Reponses aux questions fonctionnelles avec explications visuelles |
-| `pa-preview` | Preview de changements de style avant/apres |
-| `using-powers4all` | Introduction au systeme de skills |
+| `pa-start` | Entry point -- classifies the request, launches the browser, orchestrates the workflow |
+| `pa-investigate` | Bug diagnosis in business language |
+| `pa-explain` | Answers functional questions with visual explanations |
+| `pa-preview` | Before/after preview of style changes |
+| `using-powers4all` | Introduction to the skill system |
 
-### Skills herites de Superpowers
+### Inherited Skills
 
-| Skill | Role |
+| Skill | Purpose |
 |---|---|
-| `writing-plans` | Plans d'implementation detailles |
-| `executing-plans` | Execution par batches avec checkpoints |
-| `subagent-driven-development` | Sous-agents pour les taches d'implementation |
-| `requesting-code-review` | Review automatique du code |
-| `verification-before-completion` | Verification avant de declarer termine |
-| `dispatching-parallel-agents` | Taches paralleles |
+| `writing-plans` | Detailed implementation plans |
+| `executing-plans` | Batch execution with checkpoints |
+| `subagent-driven-development` | Sub-agents for implementation tasks |
+| `requesting-code-review` | Automated code review |
+| `verification-before-completion` | Verification before declaring done |
+| `dispatching-parallel-agents` | Parallel task execution |
 
-## Interface navigateur
+## Browser interface
 
-L'interface utilise un serveur localhost leger (zero dependances) qui sert des pages HTML generees par l'agent. Les composants disponibles :
+The interface uses a lightweight localhost server (zero dependencies) that serves HTML pages generated by the agent. Available components:
 
-- **Chat** — fil de conversation entre l'utilisateur et l'agent
-- **Options** — choix cliquables A/B/C
-- **Change Summary** — description avant/apres en langage metier
-- **Progress Tracker** — barre d'avancement des etapes
-- **Text Input** — saisie libre dans le navigateur
-- **Preview** — apercu visuel cote a cote (avant/apres)
-- **Cards** — variantes visuelles a choisir
+- **Chat** -- conversation thread between the user and the agent
+- **Options** -- clickable A/B/C choices
+- **Change Summary** -- before/after description in business language
+- **Progress Tracker** -- step-by-step progress bar
+- **Text Input** -- free text input in the browser
+- **Preview** -- side-by-side visual preview (before/after)
+- **Cards** -- visual variants to choose from
 
-L'agent peut aussi generer du HTML/CSS libre pour des besoins specifiques.
+The agent can also generate custom HTML/CSS for specific needs.
 
-## Philosophie
+## Philosophy
 
-- **Navigateur d'abord** — le terminal est le backend, pas l'interface
-- **Langage metier** — jamais de jargon technique
-- **Zero dependances** — rien a installer, aucun framework
-- **Base sur Superpowers** — workflow eprouve (specs, plans, implementation)
+- **Browser first** -- the terminal is the backend, not the interface
+- **Business language** -- never technical jargon
+- **Zero dependencies** -- nothing to install, no framework
+- **Proven workflow** -- specs, plans, implementation
 
 ## Credits
 
-Powers4All est un fork de [Superpowers](https://github.com/obra/superpowers) par [Jesse Vincent](https://blog.fsck.com). Merci a lui pour le systeme de skills et le workflow qui servent de fondation a ce projet.
+Powers4All is a fork of [Superpowers](https://github.com/obra/superpowers) by [Jesse Vincent](https://blog.fsck.com). Thank you for the skill system and workflow that serve as the foundation for this project.
 
-## Licence
+## License
 
-MIT License — voir le fichier LICENSE pour les details.
+MIT License -- see the LICENSE file for details.

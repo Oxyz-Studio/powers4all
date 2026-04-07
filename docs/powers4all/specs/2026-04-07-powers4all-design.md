@@ -2,7 +2,7 @@
 
 ## Vision
 
-Fork de superpowers adapte pour les profils non-dev (chefs de projet, product owners, managers). Le navigateur (localhost) est l'interface principale. Le terminal devient un backend silencieux. L'agent communique exclusivement en logique metier et produit.
+Fork de powers4all adapte pour les profils non-dev (chefs de projet, product owners, managers). Le navigateur (localhost) est l'interface principale. Le terminal devient un backend silencieux. L'agent communique exclusivement en logique metier et produit.
 
 ## Cas d'usage prioritaires
 
@@ -32,7 +32,7 @@ Fork de superpowers adapte pour les profils non-dev (chefs de projet, product ow
 3. L'agent classifie la demande (bug / question / style / evolution)
 4. L'agent pousse des pages HTML dans le navigateur pour echanger avec l'utilisateur
 5. L'utilisateur interagit via clics et saisie texte dans le navigateur
-6. Quand l'agent a suffisamment de contexte : specs, plan, implementation (comme superpowers)
+6. Quand l'agent a suffisamment de contexte : specs, plan, implementation (comme powers4all)
 7. Chaque etape s'affiche dans le navigateur avec des composants adaptes
 
 ### Principe de communication
@@ -54,7 +54,7 @@ Exemples :
 
 ## Stack technique
 
-- Serveur localhost Node.js (fork du serveur existant de superpowers/brainstorming)
+- Serveur localhost Node.js (fork du serveur existant de powers4all/brainstorming)
 - WebSocket pour la communication temps reel navigateur <-> serveur
 - HTML/CSS genere dynamiquement par l'agent (zero framework frontend)
 - Zero dependances externes
@@ -170,7 +170,7 @@ L'agent reste libre de creer du HTML/CSS arbitraire pour des besoins non couvert
 - Propose des variantes si pertinent
 - Apres validation : applique le changement
 
-### Skills conserves de superpowers (sans modification)
+### Skills conserves de powers4all (sans modification)
 - `writing-plans` — plans d'implementation detailles
 - `executing-plans` — execution par batches avec checkpoints
 - `subagent-driven-development` — subagents pour les taches d'implementation
@@ -185,7 +185,7 @@ L'agent reste libre de creer du HTML/CSS arbitraire pour des besoins non couvert
 - `finishing-a-development-branch`
 - `receiving-code-review`
 - `writing-skills`
-- `using-superpowers` (remplace par un equivalent `using-powers4all`)
+- `using-powers4all` (remplace l'ancien equivalent)
 
 ## Structure du projet
 

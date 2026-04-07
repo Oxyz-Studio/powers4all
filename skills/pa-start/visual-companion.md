@@ -2,13 +2,13 @@
 
 ## Overview
 
-The browser is ALWAYS the primary interface for Powers4All. Unlike superpowers brainstorming where the browser is an optional visual companion, in Powers4All every user interaction goes through the browser. The terminal is exclusively the agent's workspace — the user never reads or types there (beyond pressing Enter to signal they have responded in the browser).
+The browser is ALWAYS the primary interface for Powers4All. Unlike brainstorming where the browser is an optional visual companion, in Powers4All every user interaction goes through the browser. The terminal is exclusively the agent's workspace — the user never reads or types there (beyond pressing Enter to signal they have responded in the browser).
 
 This means every question, every clarification, every preview, every confirmation, and every summary must be rendered as an HTML page in the browser.
 
 ## How It Works
 
-The visual interface uses the same mechanism as superpowers brainstorming:
+The visual interface uses the same mechanism as brainstorming:
 
 1. A local HTTP server watches a directory (`screen_dir`) for HTML files
 2. When a new HTML file is written, the server detects it via filesystem watching
@@ -30,7 +30,7 @@ skills/brainstorming/scripts/start-server.sh --project-dir <project-root>
 
 | Flag | Description |
 |---|---|
-| `--project-dir <path>` | Store session files under `<path>/.superpowers/brainstorm/`. Persists after server stops. |
+| `--project-dir <path>` | Store session files under `<path>/.powers4all/sessions/`. Persists after server stops. |
 | `--host <bind-host>` | Host/interface to bind (default: `127.0.0.1`). Use `0.0.0.0` for remote environments. |
 | `--url-host <host>` | Hostname shown in the returned URL. |
 | `--foreground` | Run server in the current terminal (no backgrounding). |
@@ -60,7 +60,7 @@ Every interaction with the user follows this pattern:
 
 1. **Check server is alive** — verify that `$STATE_DIR/server-info` exists
 2. **Write HTML** to a new file in `screen_dir` — use a semantic file name, never reuse a previous name
-3. **Tell user in terminal** — print: "Consultez le navigateur et repondez. Appuyez sur Entree quand c'est fait."
+3. **Tell user in terminal** — print: "Check the browser and respond. Press Enter when done."
 4. **Wait for Enter** — the user presses Enter in the terminal after interacting in the browser
 5. **Read events** — read `$STATE_DIR/events` to get the user's clicks and text input
 6. **Process and continue** — use the event data to determine the next step
@@ -159,14 +159,14 @@ Two-column layout for listing advantages and disadvantages.
 ```html
 <div class="pros-cons">
   <div class="pros">
-    <h4>Avantages</h4>
+    <h4>Advantages</h4>
     <ul>
       <li>First advantage</li>
       <li>Second advantage</li>
     </ul>
   </div>
   <div class="cons">
-    <h4>Inconvenients</h4>
+    <h4>Disadvantages</h4>
     <ul>
       <li>First disadvantage</li>
       <li>Second disadvantage</li>
@@ -184,7 +184,7 @@ Conversation-style display for restating the user's request and showing the agen
 ```html
 <div class="chat">
   <div class="chat-message chat-user">
-    <div class="chat-avatar">Vous</div>
+    <div class="chat-avatar">You</div>
     <div class="chat-bubble">User's message here</div>
   </div>
   <div class="chat-message chat-agent">
@@ -206,11 +206,11 @@ Business-language diff for showing before/after changes. Used in diagnosis pages
     <div class="change-location">Module or feature name</div>
     <div class="split">
       <div class="change-before">
-        <h4>Avant</h4>
+        <h4>Before</h4>
         <p>Previous behavior description</p>
       </div>
       <div class="change-after">
-        <h4>Apres</h4>
+        <h4>After</h4>
         <p>New behavior description</p>
       </div>
     </div>
@@ -222,8 +222,8 @@ The change item can optionally include action buttons:
 
 ```html
 <div class="change-actions">
-  <button data-choice="apply">Appliquer</button>
-  <button data-choice="reject">Refuser</button>
+  <button data-choice="apply">Apply</button>
+  <button data-choice="reject">Reject</button>
 </div>
 ```
 
@@ -235,12 +235,12 @@ Free-text input area for when the user needs to type a response instead of choos
 
 ```html
 <div class="text-input-form">
-  <textarea id="user-input" placeholder="Decrivez votre besoin..."></textarea>
-  <button onclick="submitTextInput()">Envoyer</button>
+  <textarea id="user-input" placeholder="Describe your need..."></textarea>
+  <button onclick="submitTextInput()">Send</button>
 </div>
 ```
 
-After submission, the form is automatically disabled and the indicator bar updates to show "Message envoye". The `submitTextInput()` function sends the text via WebSocket and records it to the events file.
+After submission, the form is automatically disabled and the indicator bar updates to show "Message sent". The `submitTextInput()` function sends the text via WebSocket and records it to the events file.
 
 **Classes:** `.text-input-form`
 **Required:** `textarea` with `id="user-input"`, button calling `submitTextInput()`
@@ -367,4 +367,4 @@ When the session is complete, stop the server:
 skills/brainstorming/scripts/stop-server.sh $SESSION_DIR
 ```
 
-This kills the server process and cleans up ephemeral session files (those under `/tmp`). Persistent sessions (under `.superpowers/`) are kept so pages can be reviewed later.
+This kills the server process and cleans up ephemeral session files (those under `/tmp`). Persistent sessions (under `.powers4all/`) are kept so pages can be reviewed later.
