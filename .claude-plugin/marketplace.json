@@ -1,12 +1,12 @@
 {
-  "name": "powers4all-dev",
-  "description": "Development marketplace for Powers4All skills",
+  "name": "powers4all",
+  "description": "Marketplace for Powers4All skills",
   "owner": {
     "name": "Alex"
   },
   "plugins": [
     {
-      "name": "powers4all",
+      "name": "pa",
       "description": "Browser-first workflow skills for non-dev tech profiles",
       "version": "0.1.0",
       "source": "./"
