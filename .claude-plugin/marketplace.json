@@ -1,20 +1,15 @@
 {
-  "name": "superpowers-dev",
-  "description": "Development marketplace for Superpowers core skills library",
+  "name": "powers4all-dev",
+  "description": "Development marketplace for Powers4All skills",
   "owner": {
-    "name": "Jesse Vincent",
-    "email": "jesse@fsck.com"
+    "name": "Alex"
   },
   "plugins": [
     {
-      "name": "superpowers",
-      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
-      "version": "5.0.7",
-      "source": "./",
-      "author": {
-        "name": "Jesse Vincent",
-        "email": "jesse@fsck.com"
-      }
+      "name": "powers4all",
+      "description": "Browser-first workflow skills for non-dev tech profiles",
+      "version": "0.1.0",
+      "source": "./"
     }
   ]
 }

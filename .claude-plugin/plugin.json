@@ -1,20 +1,17 @@
 {
-  "name": "superpowers",
-  "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
-  "version": "5.0.7",
+  "name": "powers4all",
+  "description": "Browser-first workflow skills for non-dev tech profiles: bug investigation, functional questions, style previews, and minor evolutions — all in business language",
+  "version": "0.1.0",
   "author": {
-    "name": "Jesse Vincent",
-    "email": "jesse@fsck.com"
+    "name": "Alex"
   },
-  "homepage": "https://github.com/obra/superpowers",
-  "repository": "https://github.com/obra/superpowers",
   "license": "MIT",
   "keywords": [
     "skills",
-    "tdd",
-    "debugging",
-    "collaboration",
-    "best-practices",
-    "workflows"
+    "non-dev",
+    "browser-first",
+    "project-management",
+    "product-owner",
+    "visual-interface"
   ]
 }
