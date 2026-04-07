@@ -1,190 +1,115 @@
-# Superpowers
+# Powers4All
 
-Superpowers is a complete software development workflow for your coding agents, built on top of a set of composable "skills" and some initial instructions that make sure your agent uses them.
+Powers4All est un fork de [Superpowers](https://github.com/obra/superpowers) adapte pour les **profils tech non-developpeurs** : chefs de projet, product owners, managers, et toute personne qui a besoin d'interagir avec un codebase sans ecrire de code.
 
-## How it works
+## Comment ca marche
 
-It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do. 
+Au lieu du terminal, Powers4All utilise une **interface navigateur** (localhost) comme surface d'interaction principale. Vous lancez une commande, et tout se passe dans votre navigateur : questions, reponses, previews, suivi d'avancement.
 
-Once it's teased a spec out of the conversation, it shows it to you in chunks short enough to actually read and digest. 
+L'agent communique en **langage metier** — jamais de noms de fichiers, de code, ou de jargon technique. Il parle de modules, d'ecrans, de fonctionnalites et de comportements.
 
-After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
+### Le workflow
 
-Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for Claude to be able to work autonomously for a couple hours at a time without deviating from the plan you put together.
+1. Vous tapez `/pa:start Le filtre par date ne marche pas` dans Claude Code
+2. Le navigateur s'ouvre avec une interface visuelle
+3. L'agent vous pose des questions de clarification (clics ou texte libre)
+4. Il investigue, diagnostique, et vous presente ses trouvailles en langage clair
+5. Apres votre validation, il implemente la correction
+6. Vous voyez l'avancement en temps reel dans le navigateur
 
-There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
+## Cas d'usage
 
-
-## Sponsorship
-
-If Superpowers has helped you do stuff that makes money and you are so inclined, I'd greatly appreciate it if you'd consider [sponsoring my opensource work](https://github.com/sponsors/obra).
-
-Thanks! 
-
-- Jesse
-
+| Type | Exemple | Ce qui se passe |
+|---|---|---|
+| **Bug** | "Le bouton de paiement ne marche plus" | Investigation, diagnostic metier, correction apres validation |
+| **Question** | "Comment marche le systeme de notifications ?" | Explication visuelle avec schemas et flux |
+| **Style** | "Rendre les boutons plus arrondis et bleus" | Preview avant/apres dans le navigateur |
+| **Evolution** | "Ajouter un export PDF sur les factures" | Brainstorming allege, specs, plan, implementation |
 
 ## Installation
 
-**Note:** Installation differs by platform. Claude Code or Cursor have built-in plugin marketplaces. Codex and OpenCode require manual setup.
-
-### Claude Code Official Marketplace
-
-Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
-
-Install the plugin from Claude marketplace:
-
-```bash
-/plugin install superpowers@claude-plugins-official
-```
-
 ### Claude Code (via Plugin Marketplace)
 
-In Claude Code, register the marketplace first:
+Enregistrez le marketplace :
 
 ```bash
-/plugin marketplace add obra/superpowers-marketplace
+/plugin marketplace add alex/powers4all
 ```
 
-Then install the plugin from this marketplace:
+Puis installez le plugin :
 
 ```bash
-/plugin install superpowers@superpowers-marketplace
+/plugin install powers4all@powers4all
 ```
 
-### Cursor (via Plugin Marketplace)
+### Installation locale (developpement)
 
-In Cursor Agent chat, install from marketplace:
-
-```text
-/add-plugin superpowers
-```
-
-or search for "superpowers" in the plugin marketplace.
-
-### Codex
-
-Tell Codex:
-
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
-```
-
-**Detailed docs:** [docs/README.codex.md](docs/README.codex.md)
-
-### OpenCode
-
-Tell OpenCode:
-
-```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
-```
-
-**Detailed docs:** [docs/README.opencode.md](docs/README.opencode.md)
-
-### GitHub Copilot CLI
+Clonez le repo et enregistrez-le comme marketplace local :
 
 ```bash
-copilot plugin marketplace add obra/superpowers-marketplace
-copilot plugin install superpowers@superpowers-marketplace
+git clone https://github.com/alex/powers4all.git
+/plugin marketplace add /chemin/vers/powers4all
+/plugin install powers4all@powers4all-dev
 ```
 
-### Gemini CLI
+### Verification
 
-```bash
-gemini extensions install https://github.com/obra/superpowers
+Lancez une nouvelle session Claude Code dans un projet et tapez :
+
+```
+/pa:start Comment marche cette application ?
 ```
 
-To update:
+L'interface navigateur devrait se lancer automatiquement.
 
-```bash
-gemini extensions update superpowers
-```
+## Skills
 
-### Verify Installation
+### Skills Powers4All
 
-Start a new session in your chosen platform and ask for something that should trigger a skill (for example, "help me plan this feature" or "let's debug this issue"). The agent should automatically invoke the relevant superpowers skill.
+| Skill | Role |
+|---|---|
+| `pa-start` | Point d'entree — classifie la demande, lance le navigateur, orchestre le workflow |
+| `pa-investigate` | Diagnostic de bugs en langage metier |
+| `pa-explain` | Reponses aux questions fonctionnelles avec explications visuelles |
+| `pa-preview` | Preview de changements de style avant/apres |
+| `using-powers4all` | Introduction au systeme de skills |
 
-## The Basic Workflow
+### Skills herites de Superpowers
 
-1. **brainstorming** - Activates before writing code. Refines rough ideas through questions, explores alternatives, presents design in sections for validation. Saves design document.
+| Skill | Role |
+|---|---|
+| `writing-plans` | Plans d'implementation detailles |
+| `executing-plans` | Execution par batches avec checkpoints |
+| `subagent-driven-development` | Sous-agents pour les taches d'implementation |
+| `requesting-code-review` | Review automatique du code |
+| `verification-before-completion` | Verification avant de declarer termine |
+| `dispatching-parallel-agents` | Taches paralleles |
 
-2. **using-git-worktrees** - Activates after design approval. Creates isolated workspace on new branch, runs project setup, verifies clean test baseline.
+## Interface navigateur
 
-3. **writing-plans** - Activates with approved design. Breaks work into bite-sized tasks (2-5 minutes each). Every task has exact file paths, complete code, verification steps.
+L'interface utilise un serveur localhost leger (zero dependances) qui sert des pages HTML generees par l'agent. Les composants disponibles :
 
-4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh subagent per task with two-stage review (spec compliance, then code quality), or executes in batches with human checkpoints.
+- **Chat** — fil de conversation entre l'utilisateur et l'agent
+- **Options** — choix cliquables A/B/C
+- **Change Summary** — description avant/apres en langage metier
+- **Progress Tracker** — barre d'avancement des etapes
+- **Text Input** — saisie libre dans le navigateur
+- **Preview** — apercu visuel cote a cote (avant/apres)
+- **Cards** — variantes visuelles a choisir
 
-5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
+L'agent peut aussi generer du HTML/CSS libre pour des besoins specifiques.
 
-6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
+## Philosophie
 
-7. **finishing-a-development-branch** - Activates when tasks complete. Verifies tests, presents options (merge/PR/keep/discard), cleans up worktree.
+- **Navigateur d'abord** — le terminal est le backend, pas l'interface
+- **Langage metier** — jamais de jargon technique
+- **Zero dependances** — rien a installer, aucun framework
+- **Base sur Superpowers** — workflow eprouve (specs, plans, implementation)
 
-**The agent checks for relevant skills before any task.** Mandatory workflows, not suggestions.
+## Credits
 
-## What's Inside
+Powers4All est un fork de [Superpowers](https://github.com/obra/superpowers) par [Jesse Vincent](https://blog.fsck.com). Merci a lui pour le systeme de skills et le workflow qui servent de fondation a ce projet.
 
-### Skills Library
+## Licence
 
-**Testing**
-- **test-driven-development** - RED-GREEN-REFACTOR cycle (includes testing anti-patterns reference)
-
-**Debugging**
-- **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
-- **verification-before-completion** - Ensure it's actually fixed
-
-**Collaboration** 
-- **brainstorming** - Socratic design refinement
-- **writing-plans** - Detailed implementation plans
-- **executing-plans** - Batch execution with checkpoints
-- **dispatching-parallel-agents** - Concurrent subagent workflows
-- **requesting-code-review** - Pre-review checklist
-- **receiving-code-review** - Responding to feedback
-- **using-git-worktrees** - Parallel development branches
-- **finishing-a-development-branch** - Merge/PR decision workflow
-- **subagent-driven-development** - Fast iteration with two-stage review (spec compliance, then code quality)
-
-**Meta**
-- **writing-skills** - Create new skills following best practices (includes testing methodology)
-- **using-superpowers** - Introduction to the skills system
-
-## Philosophy
-
-- **Test-Driven Development** - Write tests first, always
-- **Systematic over ad-hoc** - Process over guessing
-- **Complexity reduction** - Simplicity as primary goal
-- **Evidence over claims** - Verify before declaring success
-
-Read more: [Superpowers for Claude Code](https://blog.fsck.com/2025/10/09/superpowers/)
-
-## Contributing
-
-Skills live directly in this repository. To contribute:
-
-1. Fork the repository
-2. Create a branch for your skill
-3. Follow the `writing-skills` skill for creating and testing new skills
-4. Submit a PR
-
-See `skills/writing-skills/SKILL.md` for the complete guide.
-
-## Updating
-
-Skills update automatically when you update the plugin:
-
-```bash
-/plugin update superpowers
-```
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Community
-
-Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of the folks at [Prime Radiant](https://primeradiant.com).
-
-- **Discord**: [Join us](https://discord.gg/Jd8Vphy9jq) for community support, questions, and sharing what you're building with Superpowers
-- **Issues**: https://github.com/obra/superpowers/issues
-- **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
+MIT License — voir le fichier LICENSE pour les details.
