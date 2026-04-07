@@ -106,10 +106,6 @@ The agent can also generate custom HTML/CSS for specific needs.
 - **Zero dependencies** -- nothing to install, no framework
 - **Proven workflow** -- specs, plans, implementation
 
-## Credits
-
-Powers4All is a fork of [Superpowers](https://github.com/obra/superpowers) by [Jesse Vincent](https://blog.fsck.com). Thank you for the skill system and workflow that serve as the foundation for this project.
-
 ## License
 
 MIT License -- see the LICENSE file for details.
