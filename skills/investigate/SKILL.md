@@ -3,106 +3,98 @@ name: investigate
 description: "Bug investigation and diagnosis for non-dev users. Explores code, identifies root cause, presents diagnosis in business language via the browser, proposes and implements fix after user approval."
 ---
 
-<CRITICAL-ENFORCEMENT>
-## MANDATORY: Browser-Only Output
+<STOP>
+The browser server MUST already be running (started by the `start` skill).
+You MUST have `screen_dir` and `state_dir` variables.
+If you don't have them, STOP and tell the user to run `/pa:start` first.
+</STOP>
 
-ALL diagnostic findings MUST be pushed as HTML pages to the browser. NEVER write diagnostic results in the terminal. The terminal is ONLY for:
-- "Please check your browser and press Enter when done"
-- Brief status: "Investigating..."
+# STEP 1 — Push "investigating" page
 
-Everything else goes to the browser as an HTML page.
+Write an HTML file to `$screen_dir/investigating.html`:
 
-## MANDATORY: Zero Technical Language
+```html
+<h2>Investigation in progress</h2>
+<p class="subtitle">I am analyzing the issue you reported</p>
 
-You will be FIRED if you mention ANY of these in your output to the user:
-- File names, paths, or line numbers (e.g., `ConfigureScreen.vue:456`)
-- Variable names (e.g., `dimensionX`, `fitsX1`)
+<div class="progress-tracker">
+  <div class="progress-step active">Analyzing the issue</div>
+  <div class="progress-step pending">Identifying the cause</div>
+  <div class="progress-step pending">Proposing a fix</div>
+  <div class="progress-step pending">Applying the fix</div>
+</div>
+
+<p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.85rem;">
+  This may take a moment. I will let you know as soon as I find something.
+</p>
+```
+
+Say in terminal: **"Check your browser. I'm investigating — I'll let you know when I have results."**
+
+# STEP 2 — Investigate silently
+
+Use Grep, Glob, Read, Agent tools to explore the codebase and find the root cause.
+
+<ENFORCEMENT>
+Do NOT write ANY findings in the terminal. No code, no file names, no analysis.
+The ONLY thing you may say in the terminal is "Still investigating..." if it takes long.
+ALL findings go to the browser in Step 3.
+</ENFORCEMENT>
+
+# STEP 3 — Push diagnosis page
+
+Write a NEW HTML file to `$screen_dir/diagnosis.html`.
+
+<ABSOLUTE-RULE>
+YOUR HTML PAGE MUST NOT CONTAIN ANY OF THESE — CHECK BEFORE WRITING:
+- File names or paths (e.g., ConfigureScreen.vue, Controller.php, Manager.php)
+- Variable names (e.g., dimensionX, fitsX1, tunnelConfig)
 - Code snippets of any kind
-- Technical terms: "frontend", "backend", "API", "component", "validation logic", "variant", "controller", "model"
+- Line numbers (e.g., "line 456")
+- Technical terms: "frontend", "backend", "API", "component", "validation", "controller", "model", "mixin", "class", "method", "function", "variable", "props", "state", "Vue", "React", "PHP", "JavaScript", "SQL"
 
-INSTEAD, translate everything to business language:
-- "ConfigureScreen.vue line 456" → "the product configuration screen"
+TRANSLATE everything to business language:
+- "ConfigureScreen.vue" → "the product configuration screen"
 - "dimensionX validation" → "the dimension check"
 - "ClientOrderManager.php" → "the order processing module"
 - "fitsX1 || fitsX2" → "the size verification"
 - "frontend validation" → "the check on the ordering screen"
-- "backend validation" → "the server-side verification"
-- "variant" → "product option" or "product reference"
-</CRITICAL-ENFORCEMENT>
+- "backend validation" → "the server-side check"
+- "variant" → "product option"
+- "the condition at line 476" → "the size comparison logic"
 
-# Powers4All — Investigate
+Before writing the file, mentally review EVERY sentence. If it contains ANY technical term, rewrite it.
+</ABSOLUTE-RULE>
 
-Investigate a bug reported by a non-technical user. Explore the codebase, identify the root cause, present the diagnosis in business language, and implement the fix after approval — all via the browser interface.
-
-<HARD-GATE>
-NEVER show code, file names, paths, or technical details to the user. ALL communication uses business language: modules, screens, features, behaviors. The browser is the user's interface.
-</HARD-GATE>
-
-## Prerequisites
-
-- The browser server is already running (started by start)
-- `screen_dir` and `state_dir` are known
-- The bug has been described and classified by start
-
-## Workflow
-
-### Phase 1: Acknowledge and Investigate
-
-1. Push a page showing the investigation is in progress:
+Use this HTML structure:
 
 ```html
-<h2>Investigation en cours</h2>
-<p class="subtitle">J'analyse le probleme que vous avez signale</p>
+<h2>Diagnosis</h2>
+<p class="subtitle">I identified the cause of the issue</p>
 
 <div class="progress-tracker">
-  <div class="progress-step active">Analyse du probleme</div>
-  <div class="progress-step pending">Identification de la cause</div>
-  <div class="progress-step pending">Proposition de correction</div>
-  <div class="progress-step pending">Application de la correction</div>
-</div>
-
-<p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.85rem;">
-  Cela peut prendre un moment. Je vous previens des que j'ai trouve quelque chose.
-</p>
-```
-
-2. Silently investigate:
-   - Read relevant source files based on the bug description
-   - Search for related code using Grep/Glob
-   - Check recent git history for related changes
-   - Identify the root cause
-
-### Phase 2: Present Diagnosis
-
-Push a diagnosis page in business language:
-
-```html
-<h2>Diagnostic</h2>
-<p class="subtitle">J'ai identifie la cause du probleme</p>
-
-<div class="progress-tracker">
-  <div class="progress-step completed">Analyse du probleme</div>
-  <div class="progress-step completed">Identification de la cause</div>
-  <div class="progress-step active">Proposition de correction</div>
-  <div class="progress-step pending">Application de la correction</div>
+  <div class="progress-step completed">Issue analyzed</div>
+  <div class="progress-step completed">Cause identified</div>
+  <div class="progress-step active">Proposed fix</div>
+  <div class="progress-step pending">Fix applied</div>
 </div>
 
 <div class="section">
-  <h3>Le probleme</h3>
-  <p>[Description du probleme en langage metier — ex: "Le filtre par date sur la liste des commandes ne prend pas en compte le fuseau horaire, ce qui decale les resultats d'un jour."]</p>
+  <h3>The problem</h3>
+  <p>[Plain language description — e.g., "When ordering a frame, the system checks if the dimensions fit the selected product. However, it checks each dimension separately against both axes of the product limits, which means a frame that is too tall can still pass if its width fits."]</p>
 </div>
 
 <div class="change-summary">
   <div class="change-item">
-    <div class="change-location">[Nom du module/fonctionnalite concerne]</div>
+    <div class="change-location">[Business name — e.g., "Order size verification"]</div>
     <div class="split">
       <div class="change-before">
-        <h4>Comportement actuel</h4>
-        <p>[Description du comportement bugge]</p>
+        <h4>Current behavior</h4>
+        <p>[What happens now in plain language]</p>
       </div>
       <div class="change-after">
-        <h4>Apres correction</h4>
-        <p>[Description du comportement attendu apres fix]</p>
+        <h4>After fix</h4>
+        <p>[What will happen after in plain language]</p>
       </div>
     </div>
   </div>
@@ -111,72 +103,25 @@ Push a diagnosis page in business language:
 <div class="options">
   <div class="option" data-choice="fix" onclick="toggleSelect(this)">
     <div class="letter">A</div>
-    <div class="content">
-      <h3>Appliquer la correction</h3>
-      <p>Je corrige le probleme maintenant</p>
-    </div>
+    <div class="content"><h3>Apply the fix</h3><p>Fix the issue now</p></div>
   </div>
   <div class="option" data-choice="more-info" onclick="toggleSelect(this)">
     <div class="letter">B</div>
-    <div class="content">
-      <h3>J'ai besoin de plus d'informations</h3>
-      <p>Expliquez-moi davantage avant de corriger</p>
-    </div>
+    <div class="content"><h3>I need more details</h3><p>Explain more before fixing</p></div>
   </div>
   <div class="option" data-choice="cancel" onclick="toggleSelect(this)">
     <div class="letter">C</div>
-    <div class="content">
-      <h3>Ne pas corriger</h3>
-      <p>Ce n'est pas le bon probleme ou je prefere attendre</p>
-    </div>
+    <div class="content"><h3>Don't fix</h3><p>Not the right issue or I prefer to wait</p></div>
   </div>
 </div>
 ```
 
-### Phase 3: Implement Fix
+Then say in terminal: **"Diagnosis ready. Check your browser and press Enter when done."**
 
-If the user chooses "fix":
+Wait for Enter. Read `$state_dir/events`.
 
-1. Push a progress page
-2. Implement the fix (use subagents if complex)
-3. Run verification (tests, linting)
-4. Push a completion page with before/after summary
+# STEP 4 — Act on user choice
 
-If the user chooses "more-info":
-- Push an additional explanation page with more detail (still in business language)
-- Ask again for approval
-
-If the user chooses "cancel":
-- Push a closing page, offer to investigate something else
-
-### Phase 4: Verification and Summary
-
-After implementing the fix, invoke `verification-before-completion` internally, then push:
-
-```html
-<h2>Correction appliquee</h2>
-<p class="subtitle">Le probleme a ete corrige et verifie</p>
-
-<div class="progress-tracker">
-  <div class="progress-step completed">Analyse du probleme</div>
-  <div class="progress-step completed">Identification de la cause</div>
-  <div class="progress-step completed">Correction appliquee</div>
-  <div class="progress-step completed">Verification effectuee</div>
-</div>
-
-<div class="change-summary">
-  <div class="change-item">
-    <div class="change-location">[Module concerne]</div>
-    <div class="split">
-      <div class="change-before">
-        <h4>Avant</h4>
-        <p>[Ancien comportement]</p>
-      </div>
-      <div class="change-after">
-        <h4>Maintenant</h4>
-        <p>[Nouveau comportement]</p>
-      </div>
-    </div>
-  </div>
-</div>
-```
+- **fix**: Implement, push progress page, then push completion summary
+- **more-info**: Push deeper explanation page (STILL in business language), ask again
+- **cancel**: Push closing page

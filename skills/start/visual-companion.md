@@ -20,10 +20,10 @@ The server handles all WebSocket framing, file watching, and client management. 
 
 ## Starting a Session
 
-Start the visual companion server using the script in `skills/brainstorming/scripts/`:
+Start the visual companion server using the script in `scripts/` at the plugin root:
 
 ```bash
-skills/brainstorming/scripts/start-server.sh --project-dir <project-root>
+scripts/start-server.sh --project-dir <project-root>
 ```
 
 ### Options
@@ -364,7 +364,7 @@ All variables adapt automatically to light and dark mode via `prefers-color-sche
 When the session is complete, stop the server:
 
 ```bash
-skills/brainstorming/scripts/stop-server.sh $SESSION_DIR
+scripts/stop-server.sh $SESSION_DIR
 ```
 
 This kills the server process and cleans up ephemeral session files (those under `/tmp`). Persistent sessions (under `.powers4all/`) are kept so pages can be reviewed later.
