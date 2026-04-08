@@ -1,6 +1,10 @@
 # Powers4All — Orchestrator Integration Guide
 
-This document explains how an external orchestrator (OpenClaw, or any system that manages Claude Code processes) can integrate with Powers4All to provide a fully browser-based experience — no terminal interaction required for the end user.
+> **What is this?** This document is for orchestrators like OpenClaw that run Claude Code as a backend service. It explains how to bridge Powers4All's browser interface with Claude Code's terminal, so that end users interact exclusively through a web browser — never through a terminal.
+>
+> **The chain:** Your orchestrator starts and controls a **Claude Code** process. Claude Code loads the **Powers4All plugin**, which provides skills (`pa:start`, `pa:investigate`, `pa:explain`, `pa:preview`) that generate interactive HTML pages served via a local HTTP server. Your job is to **connect the user's browser clicks to Claude Code's stdin** so the conversation flows automatically.
+>
+> **Who reads this?** The developer (or AI agent) building the orchestrator integration. Not the end user.
 
 ## Architecture
 
