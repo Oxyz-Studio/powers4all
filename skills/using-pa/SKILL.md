@@ -1,5 +1,5 @@
 ---
-name: using-powers4all
+name: using-pa
 description: Use when starting any conversation - establishes how to find and use skills for non-dev tech profiles, requiring Skill tool invocation before ANY response
 ---
 
@@ -39,10 +39,10 @@ Use the `Skill` tool in Claude Code. When you invoke a skill, its content is loa
 
 | Skill | When to use |
 |---|---|
-| `pa-start` | Any new request from the user — bug, question, style change, feature |
-| `pa-investigate` | Bug investigation and diagnosis |
-| `pa-explain` | Answering functional questions about the application |
-| `pa-preview` | Previewing style or visual changes |
+| `start` | Any new request from the user — bug, question, style change, feature |
+| `investigate` | Bug investigation and diagnosis |
+| `explain` | Answering functional questions about the application |
+| `preview` | Previewing style or visual changes |
 | `writing-plans` | Creating implementation plans after design approval |
 | `executing-plans` | Executing implementation plans in batches |
 | `subagent-driven-development` | Dispatching subagents for implementation tasks |

@@ -68,11 +68,11 @@ The browser interface should launch automatically.
 
 | Skill | Purpose |
 |---|---|
-| `pa-start` | Entry point -- classifies the request, launches the browser, orchestrates the workflow |
-| `pa-investigate` | Bug diagnosis in business language |
-| `pa-explain` | Answers functional questions with visual explanations |
-| `pa-preview` | Before/after preview of style changes |
-| `using-powers4all` | Introduction to the skill system |
+| `start` | Entry point -- classifies the request, launches the browser, orchestrates the workflow |
+| `investigate` | Bug diagnosis in business language |
+| `explain` | Answers functional questions with visual explanations |
+| `preview` | Before/after preview of style changes |
+| `using-pa` | Introduction to the skill system |
 
 ### Inherited Skills
 

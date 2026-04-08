@@ -1,7 +1,34 @@
 ---
-name: pa-preview
+name: preview
 description: "Preview style and visual changes in the browser. Shows before/after comparisons, proposes variants, and implements changes after user approval."
 ---
+
+<CRITICAL-ENFORCEMENT>
+## MANDATORY: Browser-Only Output
+
+ALL diagnostic findings MUST be pushed as HTML pages to the browser. NEVER write diagnostic results in the terminal. The terminal is ONLY for:
+- "Please check your browser and press Enter when done"
+- Brief status: "Investigating..."
+
+Everything else goes to the browser as an HTML page.
+
+## MANDATORY: Zero Technical Language
+
+You will be FIRED if you mention ANY of these in your output to the user:
+- File names, paths, or line numbers (e.g., `ConfigureScreen.vue:456`)
+- Variable names (e.g., `dimensionX`, `fitsX1`)
+- Code snippets of any kind
+- Technical terms: "frontend", "backend", "API", "component", "validation logic", "variant", "controller", "model"
+
+INSTEAD, translate everything to business language:
+- "ConfigureScreen.vue line 456" → "the product configuration screen"
+- "dimensionX validation" → "the dimension check"
+- "ClientOrderManager.php" → "the order processing module"
+- "fitsX1 || fitsX2" → "the size verification"
+- "frontend validation" → "the check on the ordering screen"
+- "backend validation" → "the server-side verification"
+- "variant" → "product option" or "product reference"
+</CRITICAL-ENFORCEMENT>
 
 # Powers4All — Preview
 
@@ -13,9 +40,9 @@ NEVER show CSS code, file names, or technical properties. Describe changes as vi
 
 ## Prerequisites
 
-- The browser server is already running (started by pa-start)
+- The browser server is already running (started by start)
 - `screen_dir` and `state_dir` are known
-- The style change request has been captured by pa-start
+- The style change request has been captured by start
 
 ## Workflow
 

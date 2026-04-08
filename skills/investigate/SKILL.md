@@ -1,7 +1,34 @@
 ---
-name: pa-investigate
+name: investigate
 description: "Bug investigation and diagnosis for non-dev users. Explores code, identifies root cause, presents diagnosis in business language via the browser, proposes and implements fix after user approval."
 ---
+
+<CRITICAL-ENFORCEMENT>
+## MANDATORY: Browser-Only Output
+
+ALL diagnostic findings MUST be pushed as HTML pages to the browser. NEVER write diagnostic results in the terminal. The terminal is ONLY for:
+- "Please check your browser and press Enter when done"
+- Brief status: "Investigating..."
+
+Everything else goes to the browser as an HTML page.
+
+## MANDATORY: Zero Technical Language
+
+You will be FIRED if you mention ANY of these in your output to the user:
+- File names, paths, or line numbers (e.g., `ConfigureScreen.vue:456`)
+- Variable names (e.g., `dimensionX`, `fitsX1`)
+- Code snippets of any kind
+- Technical terms: "frontend", "backend", "API", "component", "validation logic", "variant", "controller", "model"
+
+INSTEAD, translate everything to business language:
+- "ConfigureScreen.vue line 456" → "the product configuration screen"
+- "dimensionX validation" → "the dimension check"
+- "ClientOrderManager.php" → "the order processing module"
+- "fitsX1 || fitsX2" → "the size verification"
+- "frontend validation" → "the check on the ordering screen"
+- "backend validation" → "the server-side verification"
+- "variant" → "product option" or "product reference"
+</CRITICAL-ENFORCEMENT>
 
 # Powers4All — Investigate
 
@@ -13,9 +40,9 @@ NEVER show code, file names, paths, or technical details to the user. ALL commun
 
 ## Prerequisites
 
-- The browser server is already running (started by pa-start)
+- The browser server is already running (started by start)
 - `screen_dir` and `state_dir` are known
-- The bug has been described and classified by pa-start
+- The bug has been described and classified by start
 
 ## Workflow
 

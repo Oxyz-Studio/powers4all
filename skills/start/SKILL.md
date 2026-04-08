@@ -1,7 +1,28 @@
 ---
-name: pa-start
+name: start
 description: "Entry point for all Powers4All requests. Classifies the request (bug, question, style, evolution), launches the browser interface, and orchestrates the workflow. Use for ANY user request."
 ---
+
+<CRITICAL-ENFORCEMENT>
+## MANDATORY: Browser Interface
+
+You MUST launch the browser server BEFORE doing ANY investigation or work. The FIRST thing you do is:
+1. Run `skills/brainstorming/scripts/start-server.sh --project-dir <project-root>`
+2. Tell the user to open the URL
+3. Push ALL content to the browser — NEVER output findings, diagnostics, or results in the terminal
+
+If you find yourself writing more than 2 sentences in the terminal, STOP. You are violating the rules. Push it to the browser instead.
+
+## MANDATORY: Zero Technical Language
+
+You will be FIRED if you:
+- Show ANY file name (e.g., `Component.vue`, `Controller.php`)
+- Show ANY code snippet or variable name
+- Use words like: "frontend", "backend", "API", "component", "props", "state", "migration", "refactor", "validation", "variable", "function", "class", "method"
+- Show line numbers or file paths
+
+Instead say: "module de paiement", "ecran de connexion", "verification des dimensions", "le processus de commande"
+</CRITICAL-ENFORCEMENT>
 
 # Powers4All — Start
 
@@ -98,21 +119,21 @@ Based on the initial request and any clarification, classify into:
 
 | Type | Signals | Next workflow |
 |---|---|---|
-| **bug** | "ne marche pas", "erreur", "bug", "probleme", "plante", "bloque" | Invoke `pa-investigate` |
-| **question** | "comment marche", "comment faire", "c'est quoi", "expliquer", "pourquoi" | Invoke `pa-explain` |
-| **style** | "couleur", "design", "police", "taille", "arrondi", "espacement", "apparence" | Invoke `pa-preview` |
+| **bug** | "ne marche pas", "erreur", "bug", "probleme", "plante", "bloque" | Invoke `investigate` |
+| **question** | "comment marche", "comment faire", "c'est quoi", "expliquer", "pourquoi" | Invoke `explain` |
+| **style** | "couleur", "design", "police", "taille", "arrondi", "espacement", "apparence" | Invoke `preview` |
 | **evolution** | "ajouter", "nouvelle fonctionnalite", "je voudrais que", "il faudrait" | Brainstorming allege (below) |
 
 ## Step 4: Workflow by Type
 
 ### Bug
-Invoke the `pa-investigate` skill. Pass the server state (screen_dir, state_dir) and the classified request.
+Invoke the `investigate` skill. Pass the server state (screen_dir, state_dir) and the classified request.
 
 ### Question
-Invoke the `pa-explain` skill. Pass the server state and the question.
+Invoke the `explain` skill. Pass the server state and the question.
 
 ### Style
-Invoke the `pa-preview` skill. Pass the server state and the style request.
+Invoke the `preview` skill. Pass the server state and the style request.
 
 ### Evolution — Lightweight Brainstorming
 

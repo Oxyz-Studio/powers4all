@@ -18,7 +18,7 @@ Powers4All is a browser-first workflow system for Claude Code, designed for non-
 ### Workflow
 
 1. User types `/pa:start <request>` in the terminal
-2. The pa-start skill classifies the request and launches the browser
+2. The start skill classifies the request and launches the browser
 3. All interaction happens in the browser (questions, answers, previews, progress)
 4. When implementation is needed: specs, plan, implementation, all shown in browser
 5. The terminal shows agent activity (for debugging only)
@@ -27,10 +27,10 @@ Powers4All is a browser-first workflow system for Claude Code, designed for non-
 
 | Skill | Purpose |
 |---|---|
-| `pa-start` | Entry point — classifies request, launches browser, orchestrates |
-| `pa-investigate` | Bug diagnosis in business language |
-| `pa-explain` | Answer functional questions with visual explanations |
-| `pa-preview` | Preview style/visual changes before/after |
+| `start` | Entry point — classifies request, launches browser, orchestrates |
+| `investigate` | Bug diagnosis in business language |
+| `explain` | Answer functional questions with visual explanations |
+| `preview` | Preview style/visual changes before/after |
 | `writing-plans` | Create implementation plans (inherited) |
 | `executing-plans` | Execute plans in batches (inherited) |
 | `subagent-driven-development` | Dispatch subagents for implementation (inherited) |
