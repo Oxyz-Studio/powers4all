@@ -80,6 +80,7 @@ const SESSION_DIR = process.env.BRAINSTORM_DIR || '/tmp/brainstorm';
 const CONTENT_DIR = path.join(SESSION_DIR, 'content');
 const STATE_DIR = path.join(SESSION_DIR, 'state');
 let ownerPid = process.env.BRAINSTORM_OWNER_PID ? Number(process.env.BRAINSTORM_OWNER_PID) : null;
+const WEBHOOK_URL = process.env.PA_WEBHOOK_URL || null;
 
 const MIME_TYPES = {
   '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript',
@@ -222,6 +223,23 @@ function handleUpgrade(req, socket) {
   socket.on('error', () => clients.delete(socket));
 }
 
+function notifyWebhook(event) {
+  if (!WEBHOOK_URL) return;
+  const payload = JSON.stringify({ session: SESSION_DIR, event });
+  const url = new URL(WEBHOOK_URL);
+  const options = {
+    hostname: url.hostname,
+    port: url.port || (url.protocol === 'https:' ? 443 : 80),
+    path: url.pathname + url.search,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(payload) }
+  };
+  const req = http.request(options, () => {});
+  req.on('error', (err) => console.error('Webhook error:', err.message));
+  req.write(payload);
+  req.end();
+}
+
 function handleMessage(text) {
   let event;
   try {
@@ -235,6 +253,7 @@ function handleMessage(text) {
   if (event.choice || event.type === 'text-input') {
     const eventsFile = path.join(STATE_DIR, 'events');
     fs.appendFileSync(eventsFile, JSON.stringify(event) + '\n');
+    notifyWebhook(event);
   }
 }
 
@@ -341,7 +360,8 @@ function startServer() {
     const info = JSON.stringify({
       type: 'server-started', port: Number(PORT), host: HOST,
       url_host: URL_HOST, url: 'http://' + URL_HOST + ':' + PORT,
-      screen_dir: CONTENT_DIR, state_dir: STATE_DIR
+      screen_dir: CONTENT_DIR, state_dir: STATE_DIR,
+      webhook: WEBHOOK_URL || null
     });
     console.log(info);
     fs.writeFileSync(path.join(STATE_DIR, 'server-info'), info + '\n');
