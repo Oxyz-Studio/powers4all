@@ -12,11 +12,17 @@ Your VERY FIRST action must be running the server launch command below.
 
 # STEP 1 — Launch browser server (DO THIS FIRST, RIGHT NOW)
 
-Find the Powers4All plugin install path. The start-server.sh script is at `scripts/start-server.sh` relative to the plugin root. To find it:
+The plugin root is where `hooks/hooks.json` lives. Find it and launch the server:
 
 ```bash
-PLUGIN_DIR="$(dirname "$(dirname "$(find ~/.claude/plugins/cache -name 'start-server.sh' -path '*/powers4all*' -o -name 'start-server.sh' -path '*/pa/*' 2>/dev/null | head -1)")")"
-"$PLUGIN_DIR/scripts/start-server.sh" --project-dir "$(pwd)"
+PA_ROOT="$(find ~/.claude/plugins/cache -path '*/pa/*/hooks/hooks.json' 2>/dev/null | head -1 | xargs dirname | xargs dirname)"
+"$PA_ROOT/scripts/start-server.sh" --project-dir "$(pwd)"
+```
+
+If that fails, try searching directly:
+```bash
+PA_ROOT="$(find ~/.claude/plugins/cache -name 'start-server.sh' -path '*/pa/*' 2>/dev/null | head -1 | xargs dirname | xargs dirname)"
+"$PA_ROOT/scripts/start-server.sh" --project-dir "$(pwd)"
 ```
 
 Save `screen_dir` and `state_dir` from the JSON output.
@@ -167,5 +173,5 @@ Read `$state_dir/events`. Based on the user's choice:
 
 Push a final summary page, then stop the server:
 ```bash
-"$PLUGIN_DIR/scripts/stop-server.sh" "$SESSION_DIR"
+"$PA_ROOT/scripts/stop-server.sh" "$SESSION_DIR"
 ```
