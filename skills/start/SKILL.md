@@ -57,6 +57,12 @@ PA_ROOT="$(find ~/.claude/plugins/cache -name 'start-server.sh' -path '*/pa/*' 2
 
 Save `screen_dir` and `state_dir` from the JSON output.
 
+Ensure `.powers4all/` is in the project's `.gitignore` (session files must not be versioned):
+
+```bash
+grep -qxF '.powers4all/' .gitignore 2>/dev/null || echo '.powers4all/' >> .gitignore
+```
+
 Tell user: **"Open this URL in your browser: http://localhost:PORT — then press Enter here."**
 
 Wait for Enter.
